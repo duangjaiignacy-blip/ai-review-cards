@@ -102,6 +102,9 @@ h1.title{font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
 .tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
 .pill{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.5px;color:var(--text-sec);background:var(--bg-soft);border:1px solid var(--border);padding:4px 12px;border-radius:100px}
 .q{font-size:23px;font-weight:700;line-height:1.4;letter-spacing:-.01em;white-space:pre-wrap;margin-bottom:26px}
+.qtimer{height:6px;background:var(--bg-soft);border:1px solid var(--border);border-radius:100px;overflow:hidden;margin-bottom:6px}
+.qtimer>i{display:block;height:100%;width:100%;background:var(--accent);transition:width .1s linear}
+.qsec{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--text-sec);text-align:right;margin-bottom:16px}
 
 /* choice options */
 .opt{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;background:var(--bg);border:1.5px solid var(--border);color:var(--text);border-radius:14px;padding:15px 18px;margin:10px 0;cursor:pointer;font-size:16px;font-weight:500;line-height:1.5;transition:border-color .15s,background .15s,transform .08s;font-family:inherit;animation:optIn .42s both cubic-bezier(.22,1,.36,1)}
@@ -249,8 +252,9 @@ const EXAMSETS=[
   {id:'basic',     name:'基础卷',     emoji:'📘', n:15, pass:80, cat:'all',       desc:'15 题 · 跨主题 · 合格线 80'},
   {id:'interview', name:'面试冲刺卷', emoji:'🎯', n:20, pass:80, cat:'interview', desc:'20 题 · 全面试题库 · 合格线 80'},
   {id:'challenge', name:'全能挑战卷', emoji:'🔥', n:30, pass:90, cat:'all',       desc:'30 题 · 最高难度 · 合格线 90'},
+  {id:'timed',     name:'限时挑战卷', emoji:'⚡', n:20, pass:80, cat:'all', timed:true, perSec:15, desc:'20 题 · 每题 15 秒 · 准确率×速度计分'},
 ];
-let pool=[], i=0, busy=false, mode='review', cardShownAt=0; const grades={};
+let pool=[], i=0, busy=false, mode='review', cardShownAt=0, examTimer=null, qDeadline=0; const grades={};
 let fCat='all', fType='all', fTopic=null, limitN=20, includeMastered=false;
 let sess={answered:0,correct:0}, examLog=[], curSet=null, lastExam=null;
 let store=loadStore();
@@ -325,7 +329,7 @@ function setType(t){fType=t;rerenderSetup();}
 function setN(n){limitN=n;rerenderSetup();}
 function toggleMastered(){includeMastered=!includeMastered;rerenderSetup();}
 function home(){
-  mode='review';i=0;busy=false;pool=[];
+  clearQTimer();mode='review';i=0;busy=false;pool=[];
   document.getElementById('done').style.display='none';
   document.getElementById('doneExam').style.display='none';
   document.getElementById('doneReview').style.display='block';
@@ -364,6 +368,27 @@ function stratExam(ch,n){
   while(out.length<n&&added){added=false;for(const t of order){if(out.length>=n)break;if(byT[t].length){out.push(byT[t].pop());added=true;}}}
   return shuffle(out);
 }
+function clearQTimer(){if(examTimer){clearInterval(examTimer);examTimer=null;}}
+function startQTimer(){
+  clearQTimer();
+  const limit=curSet.perSec*1000; qDeadline=Date.now()+limit;
+  const bar=document.getElementById('qbar'), sec=document.getElementById('qsec');
+  examTimer=setInterval(()=>{
+    const rem=qDeadline-Date.now(), f=Math.max(0,rem/limit);
+    if(bar){bar.style.width=(f*100)+'%';bar.style.background=f<0.3?'var(--warn)':'var(--accent)';}
+    if(sec)sec.textContent=Math.max(0,Math.ceil(rem/1000))+'s';
+    if(rem<=0){clearQTimer();onTimeout();}
+  },80);
+}
+function onTimeout(){
+  if(busy)return;busy=true;
+  const c=pool[i], opts=document.querySelectorAll('.opt');
+  opts.forEach((o,k)=>{o.onclick=null;o.setAttribute('disabled','');o.classList.add('dim');if(k===c.answer){o.classList.add('correct');o.classList.remove('dim');}});
+  const ans=document.getElementById('ans');if(ans)ans.classList.add('show');
+  setMastery(c,false,false,false);bumpStats(false);
+  examLog.push({front:c.front,correct:false,picked:-1,answer:c.answer,options:c.options,points:0});
+  setTimeout(()=>{i++;render();},1100);
+}
 function startExam(setId){
   const set=EXAMSETS.find(s=>s.id===setId)||EXAMSETS[0]; curSet=set;
   const ch=CARDS.filter(c=>c.type==='choice'&&(set.cat==='all'||catMatch(c,set.cat)));
@@ -373,6 +398,7 @@ function startExam(setId){
   document.getElementById('segBar').innerHTML=`<span class="exam-flag">${set.emoji} ${set.name}</span>`;
 }
 function beginRun(){
+  clearQTimer();
   i=0;for(const k in grades)delete grades[k];examLog=[];sess={answered:0,correct:0};busy=false;
   document.getElementById('setup').style.display='none';
   document.getElementById('done').style.display='none';
@@ -392,12 +418,14 @@ function render(){
   nav.textContent=`${pad(i+1)} / ${pad(pool.length)}`;
   hm.textContent=(mode==='exam'?'模拟考试 ':'进行中 ')+`${pad(i+1)}/${pad(pool.length)}`;
   const bc=document.getElementById('barCount');if(bc)bc.textContent=`${pad(i+1)} / ${pad(pool.length)}`;
+  const timed=mode==='exam'&&curSet&&curSet.timed;
   let h;
   if(c.type==='choice'){
     let opts='<div id="opts">';
     c.options.forEach((o,idx)=>{opts+=`<button class="opt" style="animation-delay:${idx*55}ms" data-k="${idx}" onclick="choose(${idx})"><span class="key">${String.fromCharCode(65+idx)}</span><span>${esc(o)}</span></button>`;});
     opts+='</div>';
-    h=`<article class="card anim">${topHtml(c)}<div class="q">${esc(c.front)}</div>${opts}`+
+    const timer=timed?`<div class="qtimer"><i id="qbar"></i></div><div class="qsec" id="qsec"></div>`:'';
+    h=`<article class="card anim">${topHtml(c)}${timer}<div class="q">${esc(c.front)}</div>${opts}`+
       `<div class="answer" id="ans"><span class="alabel">解析</span>${esc(c.explain||c.back||'')}</div>`+
       `<div class="rate" id="rate"></div>${knownBtn()}</article>`;
   }else{
@@ -415,6 +443,7 @@ function render(){
   }
   stage.innerHTML=h; busy=false; cardShownAt=Date.now();
   if(c.type!=='choice') syncFlip();
+  if(timed&&c.type==='choice') startQTimer();
 }
 function syncFlip(){
   const fi=document.getElementById('flipInner');if(!fi)return;
@@ -443,8 +472,14 @@ function choose(idx){
   document.getElementById('ans').classList.add('show');
   setMastery(c,correct,dt<FAST_MS,false); bumpStats(correct);
   if(mode==='exam'){
-    examLog.push({front:c.front,correct,picked:idx,answer:c.answer,options:c.options});
-    busy=true;setTimeout(()=>{i++;render();},950);return;
+    let points;
+    if(curSet&&curSet.timed){
+      clearQTimer();
+      const limit=curSet.perSec*1000, rem=Math.max(0,qDeadline-Date.now());
+      points = correct ? (100/pool.length)*(0.5+0.5*rem/limit) : 0;
+    }
+    examLog.push({front:c.front,correct,picked:idx,answer:c.answer,options:c.options,points:points||0});
+    busy=true;setTimeout(()=>{i++;render();},(curSet&&curSet.timed)?650:950);return;
   }
   const rate=document.getElementById('rate');rate.classList.add('show');
   if(correct){rate.innerHTML='<button class="rb r2" onclick="next()">答对·会<span class="kc">3</span></button><button class="rb r3" onclick="master()">太简单·别再考<span class="kc">4</span></button>';}
@@ -489,9 +524,11 @@ function finish(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function examFinish(){
+  clearQTimer();
   const set=curSet||EXAMSETS[0];
   const total=examLog.length, correct=examLog.filter(e=>e.correct).length;
-  const score=total?Math.round(correct/total*100):0, pass=score>=set.pass;
+  const score=set.timed?Math.round(examLog.reduce((s,e)=>s+(e.points||0),0)):(total?Math.round(correct/total*100):0);
+  const pass=score>=set.pass;
   store.exam.bestBySet=store.exam.bestBySet||{};
   if(score>(store.exam.bestBySet[set.id]||0)){store.exam.bestBySet[set.id]=score;saveStore();}
   lastExam={setId:set.id,setName:set.name,score,correct,total};
