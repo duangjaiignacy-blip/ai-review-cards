@@ -37,6 +37,10 @@ h1.title{font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
 
 /* 控制台 / 目录 */
 .setup{animation:cardIn .44s cubic-bezier(.22,1,.36,1)}
+.statbar{display:flex;flex-wrap:wrap;gap:7px 18px;align-items:center;background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;padding:13px 16px;margin-bottom:18px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-sec)}
+.statbar b{color:var(--text);font-weight:700}
+.statbar .reset{margin-left:auto;color:var(--text-meta);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;font-size:11px}
+.statbar .reset:hover{color:var(--warn)}
 .seg-wrap{margin-bottom:24px}
 .seg-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-meta);margin-bottom:11px}
 .seg-label.toc-h{margin-top:36px}
@@ -50,8 +54,15 @@ h1.title{font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
 .chips button{font-family:inherit;font-size:14px;font-weight:600;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:100px;padding:9px 18px;cursor:pointer;transition:.15s}
 .chips button.on{border-color:var(--text);background:var(--text);color:#fff}
 .chips button:not(.on):hover{border-color:var(--border-strong)}
+.mastered-row{margin:-6px 0 22px}
+.toggle-chip{font-family:inherit;font-size:13px;font-weight:500;color:var(--text-sec);background:var(--bg);border:1.5px dashed var(--border);border-radius:100px;padding:8px 16px;cursor:pointer;transition:.15s}
+.toggle-chip.on{border-style:solid;border-color:var(--text);color:var(--text)}
+.toggle-chip:hover{border-color:var(--border-strong)}
 .start-btn{width:100%;margin-top:6px;background:var(--accent);color:var(--accent-ink);border:none;border-radius:16px;padding:18px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:.3px;transition:transform .08s,opacity .15s}
 .start-btn:hover{opacity:.92} .start-btn:active{transform:scale(.99)}
+.exam-btn{width:100%;margin-top:10px;background:var(--text);color:#fff;border:none;border-radius:16px;padding:16px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:.3px;transition:transform .08s,opacity .15s;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.exam-btn:hover{opacity:.9} .exam-btn:active{transform:scale(.99)}
+.exam-btn .ehint{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;opacity:.6}
 .toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:8px}
 .toc-item{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:500;color:var(--text);text-align:left;transition:.15s}
 .toc-item:hover{border-color:var(--text);background:var(--bg-soft)}
@@ -65,6 +76,7 @@ h1.title{font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
 .bar2 .back:hover{border-color:var(--text)}
 .bar2 .seg{padding:3px;gap:2px}
 .bar2 .seg button{padding:7px 14px;font-size:13px}
+.exam-flag{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1px;color:var(--accent-ink);background:var(--accent);padding:7px 14px;border-radius:100px}
 .bar-count{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-sec);white-space:nowrap}
 
 /* card */
@@ -123,21 +135,32 @@ h1.title{font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
 .rb.r0:hover{border-color:var(--warn-bd);background:var(--warn-bg)}
 .rb.r3:hover{border-color:var(--good-bd);background:var(--good-bg)}
 .hint{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-meta);margin-top:16px;letter-spacing:.3px}
+.known-btn{width:100%;margin-top:14px;background:none;border:1px dashed var(--border);color:var(--text-meta);border-radius:12px;padding:10px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:.15s}
+.known-btn:hover{border-color:var(--good-bd);color:var(--good);border-style:solid;background:var(--good-bg)}
 
 /* done */
 #done{display:none}
 .done-card{background:var(--bg);border:1.5px solid var(--border);border-radius:22px;padding:42px 38px;text-align:center;box-shadow:0 18px 50px -28px rgba(17,17,17,.18);animation:cardIn .5s cubic-bezier(.22,1,.36,1)}
 .done-card h2{font-size:28px;font-weight:700;letter-spacing:-.01em;margin:6px 0 4px}
 .done-sub{font-size:14px;color:var(--text-sec);margin-bottom:30px}
-.stats{display:flex;justify-content:center;gap:14px;margin:26px 0 30px;flex-wrap:wrap}
-.stat{flex:1;min-width:96px;background:var(--bg-soft);border:1px solid var(--border);border-radius:16px;padding:20px 8px}
-.stat b{display:block;font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:700;line-height:1;letter-spacing:-.02em}
+.stats{display:flex;justify-content:center;gap:12px;margin:26px 0 30px;flex-wrap:wrap}
+.stat{flex:1;min-width:86px;background:var(--bg-soft);border:1px solid var(--border);border-radius:16px;padding:20px 8px}
+.stat b{display:block;font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:700;line-height:1;letter-spacing:-.02em}
 .stat span{font-size:12px;color:var(--text-sec);margin-top:8px;display:block;letter-spacing:.5px}
-.stat.ok b{color:var(--good)} .stat.again b{color:var(--warn)}
+.stat.ok b{color:var(--good)} .stat.again b{color:var(--warn)} .stat.hi b{color:var(--text)}
 .result-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-meta);text-align:left;margin-bottom:8px}
 #result{width:100%;background:var(--bg-soft);color:var(--text-sec);border:1px solid var(--border);border-radius:12px;padding:14px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.6;word-break:break-all;text-align:left;min-height:54px}
 .copy{margin-top:16px;background:var(--accent);color:var(--accent-ink);border:none;border-radius:12px;padding:14px 26px;font-weight:700;cursor:pointer;font-size:15px;font-family:inherit;letter-spacing:.3px;transition:transform .08s,opacity .15s}
 .copy:hover{opacity:.9} .copy:active{transform:scale(.97)}
+/* exam result */
+.score-ring{font-family:'JetBrains Mono',monospace;font-size:72px;font-weight:700;line-height:1;letter-spacing:-.03em;margin-top:6px}
+.passtag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 18px;border-radius:100px;margin:16px 0 4px}
+.passtag.pass{background:var(--good-bg);color:var(--good)}
+.passtag.fail{background:var(--warn-bg);color:var(--warn)}
+.wrong-list{text-align:left;margin-top:24px;border-top:1px solid var(--border);padding-top:18px}
+.wrong-list .wl-h{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-meta);margin-bottom:12px}
+.wrong-item{font-size:14px;line-height:1.55;padding:9px 0;border-bottom:1px solid var(--bg-soft);color:var(--text-sec)}
+.wrong-item b{color:var(--text);font-weight:600;display:block;margin-bottom:3px}
 
 /* footer nav */
 .foot{position:fixed;left:0;right:0;bottom:0;z-index:2;background:linear-gradient(to top,var(--bg) 60%,transparent);padding:14px 0 16px;text-align:center}
@@ -147,6 +170,7 @@ h1.title{font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
   h1.title{font-size:27px} .q{font-size:20px}
   .card{padding:28px 22px 26px;border-radius:18px}
   .seg button{padding:8px 15px}
+  .score-ring{font-size:60px}
 }
 </style></head>
 <body>
@@ -166,7 +190,7 @@ h1.title{font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
   <div id="setup" class="setup" style="display:none"></div>
   <div id="stage"></div>
   <div id="done">
-    <div class="done-card">
+    <div class="done-card" id="doneReview">
       <div class="eyebrow" style="margin-bottom:6px">SESSION COMPLETE</div>
       <h2>🎉 复盘完成</h2>
       <p class="done-sub">把下面这串结果发给困困的助手（说「复盘结果」+ 粘贴），自动更新复习进度与下次到期。</p>
@@ -175,14 +199,18 @@ h1.title{font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
       <div id="result"></div>
       <button class="copy" onclick="cp()">📋 复制结果串</button>
     </div>
+    <div class="done-card" id="doneExam" style="display:none"></div>
   </div>
 </div>
 <div class="foot"><span class="pos" id="nav"></span></div>
 <script>
 const CARDS=[{"id": "kc-attention-mlp", "type": "choice", "topic": "Transformer", "source": "6-15下午", "front": "Transformer「处理」阶段，负责理解每个词「内部含义」(延展→筛选→压缩)的是哪个模块？", "back": "MLP 多层感知器", "options": ["多头自注意力机制(QKV)", "MLP 多层感知器", "词嵌入 Embedding", "Top-k 采样"], "answer": 1, "explain": "多头自注意力(QKV)管的是「词与词之间的关系/定位」；MLP 多层感知器管的是「词内部含义」，流程是延展→筛选→压缩。两者别搞混。", "srs": {"ease": 2.3, "interval": 1, "reps": 0, "lapses": 1, "due": "2026-06-20", "last": "2026-06-19"}, "cat": "课程"}, {"id": "kc-temperature-topk", "type": "choice", "topic": "Transformer", "source": "6-15下午", "front": "做法律、医疗这类要求严谨、不能发散的场景，温度(temperature)应该怎么设？", "back": "调低", "options": ["调高，越发散越好", "调低，越严谨", "固定为 1 不动", "和 top-k 一样越大越严谨"], "answer": 1, "explain": "温度低=严谨(法律/医疗)，温度高=发散(文创)。top-k 是「只在概率最高的 k 个候选词里选」，是另一个参数。", "srs": {"ease": 2.5, "interval": 1, "reps": 1, "lapses": 0, "due": "2026-06-20", "last": "2026-06-19"}, "cat": "课程"}, {"id": "kc-rlhf-iron-rule", "type": "choice", "topic": "训练流程", "source": "6-17上午训练流程", "front": "关于训练顺序的「递进铁律」，下列哪个正确？", "back": "RLHF 非必须，但只要做 RLHF，前面必须先有 SFT，不可跳过", "options": ["三个阶段缺一不可，必须全做", "可以跳过 SFT 直接做 RLHF", "RLHF 非必须，但要做 RLHF 必先有 SFT", "RLHF 必做，SFT 可省"], "answer": 2, "explain": "递进铁律：顺序为预训练→SFT→RLHF；RLHF 不是必须的，但只要要做 RLHF，前面就一定要先有 SFT，不能跳过。", "srs": {"ease": 2.65, "interval": 1, "reps": 1, "lapses": 0, "due": "2026-06-20", "last": "2026-06-19"}, "cat": "课程"}, {"id": "kc-annotation-filter", "type": "choice", "topic": "数据标注", "source": "6-17上午训练流程", "front": "一条数据被标为「完全不相关」但回答质量很高，应如何处理？", "back": "直接丢弃", "options": ["保留，质量高就能用", "人工微调后再用", "直接丢弃，哪怕质量高", "降级到部分相关再用"], "answer": 2, "explain": "筛选规则：完全不相关→直接丢(重写成本太高)；完全相关但质量低→人工微调优化后再用。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-deep-learning-depth", "type": "choice", "topic": "深度学习", "source": "6-17上午训练流程", "front": "深度学习中的「深」具体指什么？", "back": "隐藏层的层数", "options": ["数据量的大小", "隐藏层的层数", "参数精度的位数", "训练的轮数"], "answer": 1, "explain": "深度学习结构=输入层+隐藏层+输出层，「深」=隐藏层层数，叠得越多越深。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-supervised-vs-reinforcement", "type": "choice", "topic": "监督学习辨析", "source": "6-16下午", "front": "「投喂高质量标注数据让模型学习」描述的是哪种学习？", "back": "SFT 监督学习", "options": ["RLHF 强化学习", "SFT 监督学习", "无监督学习", "迁移学习"], "answer": 1, "explain": "SFT 监督学习=投喂高质量标注数据；RLHF 强化学习=持续迭代调整直到答对(类比训狗)。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-overfit-underfit", "type": "choice", "topic": "监督学习辨析", "source": "6-15上午", "front": "模型学得太死、输出高度同质化(像「震惊体」)，属于哪种问题？", "back": "过拟合", "options": ["欠拟合(大傻子，幻觉高)", "过拟合(书呆子，同质化严重)", "泛化", "涌现"], "answer": 1, "explain": "过拟合=书呆子学太死、同质性严重；欠拟合=大傻子没学到规律、泛化差。SFT 数据太少→欠拟合，太多→过拟合。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-agent-vs-chatbot", "type": "choice", "topic": "Agent", "source": "6-17下午", "front": "只写了提示词、但没有接任何工具，这是什么？", "back": "Chatbot(机器人)，不是 Agent", "options": ["合格的 Agent", "Workflow", "Chatbot，不是 Agent", "Reasoner"], "answer": 2, "explain": "Agent 核心判定=自主决策+自主调用工具。只写提示词没接工具就是 Chatbot。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-agent-vs-workflow", "type": "choice", "topic": "Agent vs Workflow", "source": "6-18上午", "front": "区分 Agent 和 Workflow 的核心判定标准是什么？(行业面试高频)", "back": "有没有「自主决策」", "options": ["能不能调用工具", "有没有自主决策", "稳不稳定", "用不用大模型"], "answer": 1, "explain": "Agent=自主决策、灵活但稳定性略低；Workflow=固定预设顺序、稳定但不灵活。判定核心=有无自主决策。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-prompt-most-key", "type": "choice", "topic": "提示词", "source": "6-16下午", "front": "User Prompt 五大原则里，老师连说两遍「非常非常关键」的是哪一条？", "back": "上下文引导", "options": ["设置角色", "限制格式", "上下文引导", "输出示例"], "answer": 2, "explain": "上下文引导最关键:默认 AI 什么都不知道、随时会忘。另一条定律是「输入质量决定输出质量」。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-prompt-priority", "type": "choice", "topic": "提示词", "source": "6-16下午", "front": "Meta / System / User 三层提示词的优先级，正确的是？", "back": "Meta > System > User(但不绝对)", "options": ["User > System > Meta", "Meta > System > User(不绝对)", "System > Meta > User", "三者完全相等"], "answer": 1, "explain": "优先级 Meta>System>User，但不绝对——可被越狱、或被临近对话带偏。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-mcp-tool-api", "type": "choice", "topic": "API/Tool/MCP", "source": "6-16下午", "front": "关于 MCP 和 Tool 的关系，正确的是？", "back": "一个 MCP 下面一堆 Tool，Tool 里可能有 API 可能没有 API", "options": ["一个 Tool 下面一堆 MCP", "一个 MCP 只能有一个 Tool", "一个 MCP 下一堆 Tool，Tool 里可能有 API 可能没有", "MCP 和 Tool 是同一个东西"], "answer": 2, "explain": "一个 MCP Server 下含多个 Tool，每个 Tool 里可能封了 API、也可能只是本地脚本。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-openai-l3", "type": "choice", "topic": "OpenAI五阶段", "source": "6-17下午", "front": "OpenAI 五阶段中，「调工具、自主决策、自主调用」对应哪一级？", "back": "L3 Agents", "options": ["L1 Chatbot", "L2 Reasoners", "L3 Agents", "L4 Innovators"], "answer": 2, "explain": "L3 Agents=调工具+自主决策+自主调用。L2 Reasoners 是 CoT 思维链推理。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-agent-test-five", "type": "choice", "topic": "Agent开发", "source": "6-18上午", "front": "测任何 Agent / 模型 / AI 工具，最少要测几次？为什么？", "back": "至少 5 次，因为模型有随机性", "options": ["1 次就够", "至少 5 次(模型有随机性)", "至少 100 次", "测不测无所谓"], "answer": 1, "explain": "至少测 5 次(单次好可能只是碰到模型峰值)。分层:个人≥5 次→工程批量上千次→抽样约 100 条。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-poc", "type": "choice", "topic": "产品流程", "source": "6-16上午", "front": "POC(Proof of Concept)的核心是什么？", "back": "用「证据」证明需求真实可行", "options": ["产出完整的 PRD 文档", "用证据(数据/市场反馈/用户声音)证明需求真实可行", "做出可上线的成品", "完成 UI 设计方案"], "answer": 1, "explain": "POC=可行性验证方案，核心词是「证据」。面试出现率约 40%。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-mvp-core-feature", "type": "choice", "topic": "产品流程", "source": "6-16上午", "front": "「缺了它产品就不成立」描述的是 MVP 三概念里的哪个？", "back": "核心功能", "options": ["核心功能", "核心链路", "功能矩阵", "附加功能"], "answer": 0, "explain": "核心功能=缺了它产品不成立；核心链路=完整流程缺一环走不通；功能矩阵=附加功能只优化体验。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-launch-order", "type": "choice", "topic": "产品流程", "source": "6-16上午", "front": "发布链路中，「公司全员」参与的测试阶段叫什么？", "back": "中测", "options": ["内测(团队几人)", "中测(公司全员)", "灰度(部分用户)", "全量"], "answer": 1, "explain": "内测=团队几人；中测=公司全员；灰度=部分用户。顺序:test→preview→内测→中测→灰度→全量。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-word-embedding-position", "type": "qa", "topic": "Transformer", "source": "6-15下午", "front": "词嵌入里为什么要加「位置向量」？没有它会怎样？", "back": "词嵌入=词源向量(本意)+位置向量(位置)相加。没有位置向量，模型就无法区分「我爱你」和「你爱我」——词一样但顺序不同，语义完全不同。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-sft-vs-rlhf-goal", "type": "qa", "topic": "训练流程", "source": "6-17上午训练流程", "front": "SFT 和 RLHF 的目标分别是什么？(别混)", "back": "SFT(监督微调)让输出「稳定」；RLHF(人类反馈强化学习)让输出「像人/对齐人类偏好」。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-reward-model", "type": "qa", "topic": "训练流程", "source": "6-17上午训练流程", "front": "RLHF 阶段真正训练的是什么？训练逻辑是怎样的？", "back": "真正训练的是「奖励模型(Reward Model)」。训法：同一问题让模型出 A/B 两答案→人工选优劣→偏好数据喂奖励模型→它当裁判给主模型打分微调，最终得 PPO 模型。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-backprop-blackbox", "type": "qa", "topic": "深度学习", "source": "6-17上午训练流程", "front": "什么是反向传播？它为什么导致「黑盒」？", "back": "反向传播：预测出现误差时，误差从输出层反向传回各隐藏层反复调参。因内部自主迭代、无法解释每一步，所以深度学习是「黑盒」。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-ai-hallucination", "type": "qa", "topic": "深度学习/黑盒", "source": "6-15下午", "front": "AI 幻觉的本质来源是什么？", "back": "AI 幻觉是生成式 AI 的根本缺陷，源于「逐字预测」机制、不可控。大语言模型只靠预测难以理解真实物理世界。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-traditional-ml-vs-llm", "type": "qa", "topic": "监督学习辨析", "source": "6-17上午训练流程", "front": "传统机器学习的监督学习 vs 大模型监督学习，区别是？", "back": "传统ML是固定匹配，只回答知识库已有内容；大模型(Transformer)有泛化能力，能推理回答没见过的新问题。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-rag-vector-db", "type": "qa", "topic": "RAG/向量库", "source": "6-18上午", "front": "什么是 RAG？知识库存在哪里？有什么好处？", "back": "RAG=检索增强生成。知识库像可增删改的「U 盘」，存在「向量数据库」里(存向量数据)。好处:改库即可更新知识，不需重训。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-input-quality-law", "type": "qa", "topic": "提示词", "source": "6-16下午", "front": "老师反复强调的提示词「定律」是哪句？", "back": "「输入的质量决定输出的质量」。配合「第一指令原则」:单窗口第一句指令的质量影响该窗口后续所有生成。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-reverse-prompt", "type": "qa", "topic": "提示词", "source": "6-18上午", "front": "为什么「反向提示词」会越禁越强化？", "back": "AI 通读整段提示词、提取所有特征并分权重。识别错误时会把「不要 X」里的 X 也当特征→越禁越出现。要优先告诉 AI 要做什么。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-mcp-instability", "type": "qa", "topic": "API/Tool/MCP", "source": "6-16下午", "front": "为什么说 MCP「不稳定」？", "back": "因为 MCP 内部路由(调哪个 Tool)由大模型自主决策，不保证每次调对正确工具。测试求稳时用「手动调用模式」。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-tool-call-spec", "type": "qa", "topic": "Agent", "source": "6-18下午", "front": "写 Agent 工具调用规范的要点有哪些？", "back": "① 点名+写触发条件(直接点工具名，如「涉及实时天气，必须调用 get_weather」)；② 参数验证前置(图片地址与提示词分离)；③ 前置调 planning 工具披露步骤。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-cot", "type": "qa", "topic": "OpenAI五阶段", "source": "6-17下午", "front": "什么是 CoT 思维链？怎么用?", "back": "CoT=让模型先「想」再答，对应 L2。有分档:简单问题关掉省 token，复杂问题拉满。DeepSeek R1 灰色 thinking 就是 CoT。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-benchmark-why", "type": "qa", "topic": "Benchmark", "source": "6-18下午", "front": "为什么做 AI 项目前必须先明确 Benchmark？", "back": "只有提前清晰服务对象、价值、人力成本、输出结果(标准)，才能避免项目失控、中途偏离失败。先有基准才能设标准→测试→对比差距。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-reverse-dev", "type": "qa", "topic": "Agent开发", "source": "6-18下午", "front": "什么是「逆向推导开发法」？有什么优势？", "back": "不正向把全流程想清再落地，而是先验证最终交付环节能否产出合格结果→反推前序环节→把人工逐步转 AI→压缩到必须用户提供的信息。优势:可一天落地多个 Agent。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-three-step-mindset", "type": "qa", "topic": "Agent开发", "source": "6-18上午", "front": "开发任何 Agent 前必须先想清楚哪两个问题？", "back": "① 在什么场景、给谁、解决什么问题；② 输入输出是什么(模态)。记住任何工作流就三步:输入、处理、输出。不要拿到需求就开干。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-version-trace", "type": "qa", "topic": "职业素养", "source": "6-17下午", "front": "版本留痕文档应包含哪些字段？", "back": "版本号+改动点+System Prompt 全文+测试结果(含截图)，收口一个文档。作用:方便自己(回退)+保护自己(留据)。改完必验好坏。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-vertical-vs-general", "type": "qa", "topic": "Agent开发", "source": "6-18上午", "front": "做生成类 Agent，应优先做通用还是垂类？为什么？", "back": "优先做垂类深耕。通用每个场景质量都只能做到平均，就是「通才的下场」。一定要做通用就必须加「需求澄清」环节。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-transformer-three-steps", "type": "recall", "topic": "Transformer", "source": "6-15下午", "front": "背诵 Transformer 对话三步（输入→处理→输出）", "back": "① 输入·词嵌入：分词→Token→词源向量(词义)+位置向量(位置)相加得每词「身份证」向量(区分我爱你/你爱我)。② 处理：多头自注意力(QKV，管词与词关系/定位)+MLP多层感知器(管词内部含义:延展→筛选→压缩)。③ 输出：逐字预测概率，配 Top-k(概率最高 k 个里选)+温度(低严谨/高发散)。出处《Attention Is All You Need》2017。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-training-pipeline", "type": "recall", "topic": "训练流程", "source": "6-17上午训练流程", "front": "背诵大模型训练全流程主线(含每阶段产出模型)", "back": "预训练→(base model 基座/不稳定)→SFT 监督微调→(SFT 模型/稳定)→RLHF 人类反馈强化学习→(PPO 模型/对齐人类、像人)。预训练输入海量通用语料；SFT 输入高质量问答对；RLHF 输入 A/B 偏好对比数据。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-agent-definition", "type": "recall", "topic": "Agent", "source": "6-16下午", "front": "背诵 Agent 的定义公式和两个关键词", "back": "Agent=提示词(系统提示词)+工具。两个关键词:自主决策+自主调用。提示词写明什么阶段用什么工具，模型自主判断是否使用、自己想→调工具→验结果→交付。只写提示词没接工具=Chatbot≠Agent。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-agent-five-abilities", "type": "recall", "topic": "Agent", "source": "6-18上午", "front": "背诵 Agent 五能力模型", "back": "① 目标理解(要什么输入、交付什么输出)；② 规划(拆任务、先列待办再分步、披露进度)；③ 工具调用；④ 记忆；⑤(完整体系后续补)。没内置规划模块时要在提示词里要求模型先输出待办清单再分步。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-qualified-agent-six", "type": "recall", "topic": "Agent", "source": "6-18下午", "front": "背诵「合格单 Agent 六条件」", "back": "① 目标明确；② 边界清晰；③ 工具齐备；④ 输入输出契约；⑤ 明确终止条件；⑥ 可独立闭环。基础特性=自主决策+自主工具调用。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-prompt-five-principles", "type": "recall", "topic": "提示词", "source": "6-16下午", "front": "背诵 User Prompt 五大原则", "back": "① 清晰的语言；② 设置角色(对 AI+对自己，双向)；③ 上下文引导(最关键)；④ 限制格式(Markdown/表格/CSV/JSON)；⑤ 输出示例。可选 few-shot/zero-shot。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-three-layer-prompt", "type": "recall", "topic": "提示词", "source": "6-16下午", "front": "背诵 Meta / System / User 三层提示词", "back": "① Meta(厂商定不可改):安全约束+输出格式。② System(开发者定可改):设角色/任务。③ User(用户定可改):即时对话。优先级 Meta>System>User(不绝对)。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-api-tool-mcp", "type": "recall", "topic": "API/Tool/MCP", "source": "6-16下午", "front": "背诵 API / Tool / MCP 三者类比和定义", "back": "API(点菜单):调服务商功能、填 key、跑对方机房。Tool(功能盒子):封 API 或脚本、按名调、防 key 泄露。MCP(Type-C 充电口):模型上下文协议、无实体，一个 Server 含多个 Tool。调用流程:用户→大模型决策→MCP(路由自判)→Tool→返回。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-openai-five-levels", "type": "recall", "topic": "OpenAI五阶段", "source": "6-17下午", "front": "背诵 OpenAI 五阶段(L1-L5)", "back": "L1 Chatbot:只能聊天无工具；L2 Reasoners:CoT 思维链；L3 Agents:调工具+自主决策(过渡期)；L4 Innovators:自主创造(未实现)；L5 Organization:AI 间协同(未实现)。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "kc-mvp-three-concepts", "type": "recall", "topic": "产品流程", "source": "6-16上午", "front": "背诵 MVP 三概念(核心功能/核心链路/功能矩阵)", "back": "① 核心功能:缺了它产品不成立。② 核心链路:从进入到产出结果的完整流程缺一环走不通。③ 功能矩阵:延伸附加功能、仅优化体验。MVP 阶段只做核心功能+核心链路。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "课程"}, {"id": "mi-train-3stage", "type": "recall", "topic": "大模型训练", "source": "面试题库", "front": "必背话术：大模型训练三阶段全流程", "back": "主流大模型训练是预训练→SFT→RLHF三阶段递进。预训练用海量通用语料得到base model（基座模型），有基础能力但输出不稳定；SFT监督微调用人工标注的高质量问答对让输出稳定；RLHF人类反馈强化学习先用人工标的A/B偏好数据训一个奖励模型当裁判，再用它给主模型打分微调，得到PPO模型，目的是对齐人类偏好。RLHF非必须，但要做必先有SFT。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-train-output", "type": "choice", "topic": "大模型训练", "source": "面试题库", "front": "大模型训练各阶段「输出」对照，哪项正确？", "back": "SFT阶段的输出是稳定的SFT模型。", "options": ["预训练输出PPO模型", "SFT输出稳定的SFT模型", "RLHF输出base model", "预训练输出奖励模型"], "answer": 1, "explain": "预训练→base model（不稳定）；SFT→SFT模型（稳定）；RLHF→PPO模型（像人）。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-sft-vs-rlhf", "type": "qa", "topic": "大模型训练", "source": "面试题库", "front": "SFT 和 RLHF 的区别是什么？RLHF 能跳过 SFT 直接做吗？", "back": "SFT让输出稳定；RLHF让输出对齐人类偏好。RLHF非必须，但要做RLHF必先有SFT，不能跳过。别说Kimi跳过SFT直接RLHF——Kimi也用了SFT。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-reward-model", "type": "qa", "topic": "大模型训练", "source": "面试题库", "front": "RLHF 的奖励模型是怎么训出来的？", "back": "同一问题让模型出A/B两个答案，人工选哪个更好，用这些A/B偏好对比数据训出奖励模型当裁判，再用它给主模型打分微调。注意别把PPO（被训出来的主模型）和奖励模型（裁判）混。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-rl-vs-sl", "type": "qa", "topic": "大模型训练", "source": "面试题库", "front": "用例子说明 RLHF 强化学习和 SFT 监督学习的区别？", "back": "RLHF强化学习=持续迭代到答对（像训狗、扫地机器人）；SFT监督学习=投喂高质量标注数据学习（像老师授课）。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-transformer-3step", "type": "recall", "topic": "Transformer", "source": "面试题库", "front": "必背贯口：AI 为什么能回复我（Transformer 三步走）", "back": "①先定义：AI回复本质是「预测」逻辑，底层主流是Transformer架构。②原理三步：输入=词嵌入（分词Token→词源向量+位置向量相加得代表数组）；处理=多头自注意力（让每个词靠上下文知道定位）+MLP多层感知器（对词义延展、筛选、压缩）；概率输出=逐字预测，用温度/Top-K控制下一个字。③收尾：逐字预测→不可控→AI幻觉是模型的根本缺陷无法根治；AI产品经理的价值就是用技术手段+产品策略尽可能降低幻觉。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-deep-meaning", "type": "choice", "topic": "深度学习", "source": "面试题库", "front": "深度学习的「深」指的是什么？", "back": "指隐藏层的层数。", "options": ["训练数据的规模", "隐藏层的层数", "模型参数的精度", "推理的思考深度"], "answer": 1, "explain": "深度学习的「深」指隐藏层的层数；被称为黑盒是因为反向传播让模型自主迭代调参，每步无法直观解释。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-blackbox", "type": "qa", "topic": "深度学习", "source": "面试题库", "front": "为什么说深度学习是「黑盒」？", "back": "因为反向传播让模型自主迭代调参，每一步无法直观解释，所以是黑盒。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-underfit-overfit", "type": "qa", "topic": "深度学习", "source": "面试题库", "front": "欠拟合和过拟合的区别？", "back": "欠拟合=没学到规律、泛化差；过拟合=学得太死、同质性严重。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-traditional-vs-llm", "type": "qa", "topic": "深度学习", "source": "面试题库", "front": "传统机器学习和大模型监督学习的区别？", "back": "传统是固定匹配，只答知识库里已有的；Transformer有泛化能力，能推理回答没见过的新问题。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-compute", "type": "choice", "topic": "AI基础", "source": "面试题库", "front": "关于「算力」，下列说法正确的是？", "back": "算力≠显卡，是整套基础设施。", "options": ["算力就是显卡（GPU）", "算力=成千上万GPU+服务器+电力+散热+网络带宽整套基础设施", "算力=训练用的算法", "算力=模型参数量"], "answer": 1, "explain": "算力≠显卡，是整套基础设施；同理算法≠架构，Transformer/CNN/RNN只是算法这套方法论的一部分。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-asr-tts", "type": "choice", "topic": "AI基础", "source": "面试题库", "front": "语音转文字和文字转语音分别对应哪个术语？", "back": "语音转文字=ASR，文字转语音=TTS。", "options": ["语音转文字=TTS，文字转语音=ASR", "语音转文字=ASR，文字转语音=TTS", "语音转文字=NLP，文字转语音=OCR", "语音转文字=TTS，文字转语音=NLP"], "answer": 1, "explain": "ASR=自动语音识别（语音→文字）；TTS=文字转语音（文字→语音）。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-finetune-select", "type": "qa", "topic": "AI基础", "source": "面试题库", "front": "微调怎么做选型？", "back": "策略上用参数高效微调（PEFT）；技术上用Lora（行业默认）。数据量参考：简单任务<5000，复杂5000~10万+，专业领域2000~5000。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-ai-classify", "type": "qa", "topic": "AI分类", "source": "面试题库", "front": "为什么要给 AI 分类？", "back": "答两个必要性：①消除认知模糊——贴AI标签的不是同一个东西，要分清讨论的是哪个级别；②匹配具体场景做选型——不选最好/最贵，选当前能力+成本下最合适的。可带出含人量四档。当前AI在ANI，AGI仍是无人能定义的愿景。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-openai-5stage", "type": "choice", "topic": "OpenAI五阶段", "source": "面试题库", "front": "OpenAI 通往 AGI 五阶段中，「能调工具、自主决策」属于哪一阶段？", "back": "L3 Agents 智能体。", "options": ["L1 Chatbot", "L2 Reasoners", "L3 Agents", "L4 Innovators"], "answer": 2, "explain": "L1聊天、L2推理(CoT)、L3智能体(调工具、自主决策)、L4创新(未实现)、L5组织(未实现)。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-agent-def", "type": "recall", "topic": "Agent", "source": "面试题库", "front": "必背：什么是一个合格的 Agent？", "back": "一个合格的Agent=系统提示词+可调用工具，且能自主决策、自主调用工具。拿到目标后自主完成思考→调工具→验结果→交付。只写提示词、没接工具=Chatbot≠Agent。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-chatbot-vs-agent", "type": "qa", "topic": "Agent", "source": "面试题库", "front": "Chatbot 和 Agent 的区别？", "back": "Chatbot只靠模型能力一问一答；Agent有工具、能自主跑全流程（思考→调工具→验结果→交付）。判断标准：是否接了工具并能自主决策、自主调用。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-cot", "type": "qa", "topic": "CoT", "source": "面试题库", "front": "CoT 思维链是什么？", "back": "让模型先「想」再答，属于L2能力，有分档，简单问题可关掉省token。DeepSeek R1里那段灰色thinking就是CoT。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-badcase", "type": "choice", "topic": "企业级Agent", "source": "面试题库", "front": "测试 Agent 时，「调用工具失败、流程中断」属于哪类 bad case？", "back": "链路 bad case。", "options": ["质量bad case", "链路bad case", "性能bad case", "对齐bad case"], "answer": 1, "explain": "质量bad case=跑出来了但质量不达标；链路bad case=没生成/报错、链路上就死了。测Agent要额外关注链路bad case。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-agent-cycle", "type": "qa", "topic": "企业级Agent", "source": "面试题库", "front": "企业级 Agent 开发周期多久？耗时在哪？验收看什么？", "back": "周期2~7天（一周为主）。耗时在写提示词→调试→制定验收标准→多轮测试验收。验收两维度：链路验收+质量验收。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-prompt-method", "type": "recall", "topic": "提示词工程", "source": "面试题库", "front": "必背：你的提示词开发方法", "back": "我不硬写System Prompt。我先描述清楚需求（做什么、输入输出、MCP、场景、软件），让AI帮我生成系统提示词。调试时也是我描述改动，AI改。核心功力在提需求的清晰度。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-job-habit", "type": "qa", "topic": "职业素养", "source": "面试题库", "front": "面试官问「你的工作习惯」，AI 产品经理怎么答？", "back": "三点：①交叉验证一切输出——哪怕权威人员给的也不默认没问题；②版本留痕——每版记版本号+改动点+提示词+测试结果，收口一个文档；③改了必验——不盲目迭代。可搭STAR案例。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-model-select", "type": "qa", "topic": "模型选型", "source": "面试题库", "front": "模型选型的原则是什么？各模型怎么定位？", "back": "原则：没有最好的模型，要根据任务特点实测对比。Claude Sonnet 4.6各能力均衡、工具调用稳，适合做测试基准；Opus系列是代码天花板（Opus 4.6最好）；Haiku轻量只解简单问题。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-three-docs", "type": "choice", "topic": "产品流程", "source": "面试题库", "front": "BRD / MRD / PRD 三份文档分别给谁、回答什么？", "back": "BRD给老板、MRD看市场、PRD给研发。", "options": ["BRD给研发、MRD给老板、PRD看市场", "BRD给老板（要不要做）、MRD看市场（机会多大）、PRD给研发（怎么做）", "BRD看市场、MRD给研发、PRD给老板", "BRD给研发、MRD看市场、PRD给老板"], "answer": 1, "explain": "BRD给老板审批→MRD看市场→PRD给研发(最落地)。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-poc-vs-mvp", "type": "choice", "topic": "POC/MVP", "source": "面试题库", "front": "POC 和 MVP 一句话区别，哪项正确？", "back": "POC验证能不能做（技术），MVP验证该不该做（需求）。", "options": ["POC验证该不该做，MVP验证能不能做", "POC验证能不能做（技术），MVP验证该不该做（需求）", "POC和MVP都验证技术可行性", "MVP是大而残缺的半成品"], "answer": 1, "explain": "POC验证能不能做(技术,demo可弃)；MVP验证该不该做(需求)，是小而完整的闭环，v1.0上线的往往就是MVP。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-mvp-step", "type": "qa", "topic": "POC/MVP", "source": "面试题库", "front": "MVP 是产品研发流程里的一个步骤吗？", "back": "不是。MVP是范围策略，决定「v1.0先做哪个最小完整闭环」，贯穿PRD到上线；v1.0上线的往往就是MVP。不是串行步骤。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-poc-special", "type": "qa", "topic": "POC", "source": "面试题库", "front": "面试要求出 POC 方案时怎么应对？", "back": "POC=可行性验证方案，核心是用「证据」（数据/市场反馈/用户声音）证明需求真实可行。约40%面试会要求出POC，提前问师兄师姐POC真题。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-real-vs-fake", "type": "qa", "topic": "用户研究", "source": "面试题库", "front": "怎么判断真需求 vs 伪需求？", "back": "真需求=用户在真实场景下真的会为它改变行为/付费；伪需求=嘴上说要但实际不用、不付费。核心原则：看行为，别只信嘴。案例:轻颜用户说想要更自然美颜，实际却疯狂用重度滤镜。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-demand-3", "type": "recall", "topic": "用户研究", "source": "面试题库", "front": "必背：需求三要素与用户故事写法", "back": "任何真需求都能拆成「谁（用户）+在什么情况下（场景）+遇到什么没被解决的问题（痛点）」。先讲清用户/场景/痛点，再谈做什么功能。用户故事：作为<用户>，我想<做什么>，以便<达成什么价值>。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-pmf", "type": "choice", "topic": "PMF", "source": "面试题库", "front": "判断产品达到 PMF 的 Sean Ellis 问卷信号是？", "back": "≥40%用户说「没有它会非常失望」。", "options": ["≥20%用户会推荐", "≥40%用户说没有它会非常失望", "≥60%用户每天使用", "≥80%用户付费"], "answer": 1, "explain": "PMF信号：用户自发增长、留存曲线走平、Sean Ellis问卷≥40%说没有它会非常失望。PMF会随市场变化丢失，要持续验证。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-northstar", "type": "choice", "topic": "北极星指标", "source": "面试题库", "front": "关于北极星指标，下列哪项正确？", "back": "全公司唯一最重要的一个指标，只能有一个。", "options": ["北极星指标越多越好，每个部门一个", "下载量、PV是典型的北极星指标", "北极星只能有一个，最能代表用户获得核心价值", "北极星就是注册量"], "answer": 2, "explain": "北极星=全公司唯一最重要指标，只能有一个；下载量/注册量/PV是虚荣指标。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-aarrr", "type": "choice", "topic": "AARRR", "source": "面试题库", "front": "AARRR 海盗指标中，公认「最关键」的是哪一环？", "back": "R 留存 Retention。", "options": ["A 获取 Acquisition", "A 激活 Activation", "R 留存 Retention", "R 推荐 Referral"], "answer": 2, "explain": "AARRR=获取/激活/留存/收入/推荐，留存最关键。延伸RARRA把留存提到第一位。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-kano", "type": "choice", "topic": "KANO", "source": "面试题库", "front": "KANO 模型中「没有会愤怒、有了也无感」的需求属于哪一类？", "back": "基本型（必备型）。", "options": ["兴奋型", "期望型", "基本型", "无差异型"], "answer": 2, "explain": "基本型(没有会愤怒、有了无感)必须满足；期望型(越多越好)重点投入；兴奋型(惊喜)做差异化；无差异/反向别做。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-tob-toc", "type": "choice", "topic": "商业模式", "source": "面试题库", "front": "关于 To B 和 To C 的区别，哪项正确？", "back": "To B使用者≠决策者≠付费者，决策慢客单价高。", "options": ["To B用户=使用者=付费者，决策快", "To C使用者≠决策者≠付费者", "To B使用者≠决策者≠付费者，决策慢、客单价高、重销售/交付/续费", "To C重销售和续费"], "answer": 2, "explain": "To C用户=使用者=付费者决策快重体验；To B使用者≠决策者≠付费者决策慢重销售/交付/续费。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-plg-slg", "type": "qa", "topic": "商业模式", "source": "面试题库", "front": "PLG 和 SLG 分别是什么？AI 产品常见组合？", "back": "PLG产品驱动增长：免费试用/自助注册（Notion、Figma）；SLG销售驱动增长：靠销售谈、大客户高客单To B。AI产品多是订阅+按量混合，PLG起量后再叠SLG攻大客户。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-ltv-cac", "type": "choice", "topic": "SaaS指标", "source": "面试题库", "front": "SaaS 健康的 LTV/CAC 阈值是多少？", "back": "LTV/CAC ≥ 3 算健康。", "options": ["LTV/CAC ≥ 1 算健康", "LTV/CAC ≥ 3 算健康", "LTV/CAC ≤ 0.5 算健康", "LTV/CAC ≥ 10 才算健康"], "answer": 1, "explain": "LTV/CAC≥3健康(<1=拉一个亏一个)；CAC回收期<12个月；NRR>100%健康、>120%优秀。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-nrr", "type": "choice", "topic": "SaaS指标", "source": "面试题库", "front": "NRR 净收入留存达到什么水平算优秀？", "back": ">120% 算优秀。", "options": [">100%优秀，>80%健康", ">120%优秀，>100%健康", ">50%优秀，>30%健康", ">200%才算优秀"], "answer": 1, "explain": "NRR(老客户今年比去年多付多少)>100%健康、>120%优秀。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-ai-margin", "type": "qa", "topic": "SaaS指标", "source": "面试题库", "front": "AI 产品在 SaaS 指标上有什么特别要注意的？", "back": "AI产品因推理成本（Token/算力）吃毛利，SaaS通常毛利70~80%+，AI产品毛利常被拉低，是关键风险。要算清每次调用成本vs收费。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-rag-vs-ft", "type": "choice", "topic": "RAG vs微调", "source": "面试题库", "front": "要让模型「记住会经常变化、需可溯源的事实知识」，该选什么？", "back": "RAG 检索增强生成。", "options": ["微调（Lora）", "RAG（检索增强生成）", "重新预训练", "加大温度参数"], "answer": 1, "explain": "记住会变的事实知识→RAG(改库即可、可溯源)；学会固定能力/风格→微调(Lora)。两者常组合。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-rag-ft-qa", "type": "qa", "topic": "RAG vs微调", "source": "面试题库", "front": "让模型懂我的领域知识，用 RAG 还是微调？", "back": "记住会变的事实知识→RAG（存知识库检索塞上下文，适合常更新、要溯源）；学会固定能力/风格→微调（Lora，改风格/输出格式）。常组合：微调定风格+RAG补最新知识。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-star", "type": "recall", "topic": "STAR", "source": "面试题库", "front": "必背：介绍项目的 STAR 五点框架", "back": "先讲清核心框架再补细节，一句话说清五点：①是什么→②什么场景→③帮谁→④解决什么问题→⑤取得什么结果。之后再讲技术、方法论、坑与解决。个人+小组+公司产品都要有。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-onenail", "type": "qa", "topic": "一锤定音", "source": "面试题库", "front": "和别人竞争同一岗位，你的「一锤定音」差异化打法有哪些？", "back": "①豆包GEO（让面试官在豆包直接搜你，简历/项目/用户量自动呈现）；②可视化作品集（项目架构做成可交互网页投屏讲解，嘴笨/怕忘词尤其适用）；③真正上线、能拉投资的产品作背书。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-ceo-interview", "type": "qa", "topic": "CEO面", "source": "面试题库", "front": "AI 产品经理面试为什么常是 CEO 亲面？该怎么应对？", "back": "约8/10场是CEO直接面，多数CEO不懂技术，爱听年轻人对AI的理解和抱负。结论：哪怕技术都不懂，能展现清晰思考和观点就有几率通过。产品岗一般三面。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-product-form", "type": "qa", "topic": "产品工程常识", "source": "面试题库", "front": "产品形态（插件/Web/APP/PC）有高低之分吗？相关费用？", "back": "产品形态没有高低之分，插件最简单。部署：GitHub可免费拿域名，正规做法买域名+备案。费用：Chrome插件US$5一次性；Apple开发者US$99/年(≈¥688)。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mi-ai-3type", "type": "choice", "topic": "岗位认知", "source": "面试题库", "front": "AI 产品按「人的含量」分三类，「人和AI共同完成（如侧边栏伴读）」属于哪类？", "back": "Copilot。", "options": ["Agent", "Copilot", "Embedding", "FDE"], "answer": 1, "explain": "Agent(AI自主、人参与少)、Copilot(人和AI共同完成,如侧边栏伴读)、Embedding(嵌入场景的小AI,如哼歌识曲)。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-agent-six-conditions", "type": "recall", "topic": "合格单Agent", "source": "面试题库", "front": "背诵：一个合格的单 Agent 的六个核心条件（基础特性外）", "back": "基础特性=自主决策+自主工具调用。六条件：① 目标明确 ② 边界清晰 ③ 工具齐备 ④ 输入输出契约 ⑤ 明确终止条件 ⑥ 可独立闭环。答六条比答两条更显完整认知。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-agent-prompt-five", "type": "recall", "topic": "Agent提示词五要点", "source": "面试题库", "front": "背诵：Agent 提示词编写五要点（高频题底线）", "back": "① 职责单一（一个 Agent 一个目标）② 工具定义明确 ③ 流程可执行 ④ 失败有兜底 ⑤ 终止条件清晰。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-three-layer-check", "type": "qa", "topic": "三层校验+四指标", "source": "面试题库", "front": "Agent 效果怎么评？三层校验和四个量化指标分别是什么？", "back": "三层校验：① 功能能否正常跑通 ② 输出是否符合需求 ③ 多次运行是否稳定。四个量化指标：任务完成率 / 工具调用准确率 / 输出合格率 / 运行稳定性。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-agent-vs-workflow", "type": "qa", "topic": "Agent vs Workflow", "source": "面试题库", "front": "Agent 和 Workflow 的核心区别是什么？", "back": "Agent 依托大模型自主决策，能根据用户输入灵活调整步骤（如需求已清晰就跳过澄清）；Workflow 是提前固定死的流程，不管输入是什么都按预设步骤走。Agent 灵活但稳定性略低，Workflow 稳定但无自主决策。只有保留自主决策能力的才叫 Agent。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-agent-problem-framework", "type": "qa", "topic": "Agent答题框架", "source": "面试题库", "front": "被问「你做 Agent 遇到什么问题、怎么解决」（最高频）该怎么答？", "back": "答题框架：先点明 Agent vs Workflow 核心差异 → 引出项目核心问题 → 结合实际场景讲分析与解决过程，别零散罗列。实战案例：开发产品场景图生成 Agent 没锚定垂类边界，后来通用模型效果超过自研，对比测试验证后果断下掉自研 Agent，体现边界意识+果断决策。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-demand-three-elements", "type": "recall", "topic": "需求三要素", "source": "面试题库", "front": "背诵：需求三要素是什么？写法是什么？", "back": "需求三要素=用户 / 场景 / 痛点：谁（用户）+ 在什么情况下（场景）+ 遇到什么没被解决的问题（痛点）。先讲清用户/场景/痛点，再谈做什么功能。用户故事：作为<用户>，我想<做什么>，以便<达成什么价值>。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-true-false-demand", "type": "qa", "topic": "真伪需求", "source": "面试题库", "front": "怎么判断真需求 vs 伪需求？核心原则是什么？", "back": "真需求=用户在真实场景下真的会为它改变行为/付费；伪需求=嘴上说要但实际不用、不付费。核心原则：看行为，别只信嘴（福特「你问用户要什么，他说要更快的马」）。案例：轻颜用户说想要更自然美颜，实际却疯狂用重度滤镜。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-rag-principle", "type": "qa", "topic": "RAG原理", "source": "面试题库", "front": "用一句话讲清 RAG 原理及其存储载体。", "back": "RAG（检索增强生成）的知识库就像一个可增删改的 U 盘，专业存储载体是向量数据库、存的是向量数据；问答时检索相关知识塞进上下文，改知识库即可、不用重训，适合知识常更新/要溯源。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-agent-memory-three", "type": "recall", "topic": "Agent分层记忆", "source": "面试题库", "front": "背诵：Agent 记忆的三层及各自含义", "back": "临时记忆=当前对话上下文窗口（切窗口就丢）；短期记忆=近期多次会话关键信息（维持连贯）；长期记忆=用户固定个性化信息（姓名/岗位/偏好，如 Claude 的长期记忆体系）。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-user-layer-lifecycle", "type": "qa", "topic": "用户分层-生命周期", "source": "面试题库", "front": "按生命周期对用户分层，四类的时间界定分别是什么？", "back": "新用户（注册 7 天内）、活跃（30 天有核心行为）、沉睡（30–90 天）、流失（90 天+）。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-user-layer-consume", "type": "qa", "topic": "用户分层-消费/动机", "source": "面试题库", "front": "按消费能力和按购买动机分别怎么给用户分层？", "back": "按消费能力：高价值/潜力/需激活/低价值。按购买动机：要最好的/图便宜/解决问题型（京东）/发烧友型（淘宝）。B 端必须拆角色：使用者/购买者/管理者/被影响者。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-user-research-three", "type": "qa", "topic": "用户研究三方法", "source": "面试题库", "front": "需求获取三方法及其使用顺序是什么？", "back": "用户访谈（0→1 找方向）→ 竞品分析（看怎么借鉴）→ 行为数据（有用户后看点击指导迭代）。用户会骗人，访谈不是问「你觉得怎么样」，而是追问行为、约束、取舍。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-ai-product-three-class", "type": "recall", "topic": "AI产品三分类", "source": "面试题库", "front": "背诵：AI 产品按「人的含量」三分类", "back": "Agent（AI 自主，人参与少）、Copilot（人和 AI 共同完成，如侧边栏伴读）、Embedding（嵌入场景的小 AI，如哼歌识曲）。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-product-fix-tech", "type": "qa", "topic": "用产品力弥补技术缺陷", "source": "面试题库", "front": "什么叫「用产品力弥补技术缺陷」？", "back": "AI 不完美时，PM 通过流程、状态、审核、提示、风控、人工抽检来解决，而非只说「让模型变好」。当前 AI 产品真正难点不是能不能生成，而是意图识别不准、需求澄清、生成质量不可控。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-differentiation-three", "type": "recall", "topic": "差异化三找法", "source": "面试题库", "front": "背诵：差异化三种找法（由易到难）及对应案例", "back": "① 用户拆分（大疆 Pocket vs Insta360）② 需求拆分（海底捞服务 vs 巴奴食材）③ 场景拆分（最难常无效）。配套：先做深不做广，差异化是干出来的不是想出来的。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-demand-pool", "type": "qa", "topic": "需求池", "source": "面试题库", "front": "为什么说「需求池=合同」？建设方向有哪几档？", "back": "进池=全公司同步排期，用户研究报告是入场券。建设方向四档：增长/转化/留存/体验。需求来源三分法：业务需求、产品自驱（To C 占 80–90%）、老板需求。讨论是免费的，落地才有成本。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-content-safety-three", "type": "recall", "topic": "内容安全三段式审核", "source": "面试题库", "front": "背诵：内容安全三段式审核（生成前/中/后）", "back": "前：给规范；中：状态由「生成中」切「审核中」；后：屏蔽+模糊提示+引导二次生成。配套：生成失败必须展示（第一价值是阻断用户继续狂点消耗 token）；违规不能告诉用户具体哪个词错，技术问题包装成「服务器繁忙」。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-sender-receiver", "type": "qa", "topic": "发信人vs收信人", "source": "面试题库", "front": "用「发信人 vs 收信人」解释微信和钉钉的产品差异。", "back": "微信站收信人（克制）；钉钉站发信人（强已读未读、强触达）。老板买钉钉=消解「确定性焦虑」。这是置身钉内一章最重要的视角。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-benchmark", "type": "qa", "topic": "Benchmark", "source": "面试题库", "front": "用拆分答题法解释 Benchmark 是什么？", "back": "Benchmark=标准化能力评估体系=评估指标 + 评测任务 + 基准分数线。Agent 领域三层级：单步动作正确性 / 执行轨迹合理性 / 最终任务达成率。做 AI 项目前必须先定 Benchmark 防失控。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-deep-report-8", "type": "recall", "topic": "深度体验报告8模块", "source": "面试题库", "front": "背诵：深度体验报告的 8 个模块", "back": "选品 / 市场竞品 / 迭代战略 / 用户分析 / 产品架构功能拆解 / 商业模式增长 / SWOT / 整合自检。约 2–3 万字，信息架构拆到第三层。包装成深度体验报告 Agent 可作面试加分项。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-career-three-stage", "type": "recall", "topic": "职业规划三段式", "source": "面试题库", "front": "背诵：通用问题·职业规划三段式话术", "back": "短期 1–3 年快速成长、融入团队；中期 3–5 年成长为领域专家；长期独当一面/带团队。提前备标准回答，别现场随意。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-agent-test-method", "type": "qa", "topic": "Agent怎么测", "source": "面试题库", "front": "Agent 怎么测（实操题）？测哪两个维度？", "back": "模型生成有随机性，单次不算数。手动测 20–30 次 → 批量测试集交工程跑上千次看链路成功率 → 随机抽样约 100 条校验输出质量准确率。小样本至少测 5 次。两维度：链路成功率 + 输出质量准确率。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-three-axes-order", "type": "choice", "topic": "产品分析三板斧", "source": "面试题库", "front": "产品分析「三板斧」的顺序铁律是？", "options": ["先用户 → 再需求和场景 → 最后功能", "先功能 → 再用户 → 最后场景", "先场景 → 再功能 → 最后用户", "先需求 → 再功能 → 最后用户"], "answer": 0, "explain": "顺序铁律：先用户→再需求和场景→最后功能，不能从功能倒推用户。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-product-landing-three", "type": "choice", "topic": "产品落地三问", "source": "面试题库", "front": "PM 判断一个需求要不要做的「产品落地三问」是？", "options": ["用户买不买？公司赚不赚？开发难不难？", "用户多不多？竞品强不强？老板批不批？", "技术行不行？预算够不够？时间赶不赶？", "流量大不大？转化高不高？留存稳不稳？"], "answer": 0, "explain": "产品落地三问=用户买不买、公司赚不赚、开发难不难。PM 是做取舍、找共识的人。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-agent-five-ability", "type": "choice", "topic": "完整Agent五能力", "source": "面试题库", "front": "完整可用的 Agent 五大能力中，「先输出待办清单再分步执行」属于哪一项？", "options": ["规划", "目标理解", "工具调用", "记忆"], "answer": 0, "explain": "规划=拆解复杂任务、先输出待办清单再分步执行，还能向用户分阶段披露进度。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-positioning-four", "type": "choice", "topic": "产品定位差异化", "source": "面试题库", "front": "关于产品定位，老师强调「定位最差的不是选错，而是」？", "options": ["反复横跳", "选得太晚", "抄竞品", "定位太窄"], "answer": 0, "explain": "定位最差的不是选错，是反复横跳；选了就走到底（苹果闭源 vs 安卓开源）。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-questionnaire-purpose", "type": "choice", "topic": "用户研究方法论", "source": "面试题库", "front": "关于问卷调研，下面哪个说法符合课程观点？", "options": ["问卷目的不是听真话，是看用户分层有没有偏移，用量级抵消骗", "问卷能拿到用户真实想法，比访谈更可信", "用户量 <1000 也要发问卷才有统计意义", "问卷回收越少越精准"], "answer": 0, "explain": "问卷目的是看用户分层有没有偏移，用量级抵消骗（1 万发出回收 200 够看趋势）；用户量 <1000 不发。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-refund-points", "type": "choice", "topic": "内容安全审核", "source": "面试题库", "front": "AIGC 生成失败后「退积分」问题，符合课程观点的是？", "options": ["站用户该退、站公司不能退，图已生成 API 已扣费，全退会被刷调用攻击", "必须全额退，否则违反消费者权益", "一律不退，节省成本", "退一半最公平"], "answer": 0, "explain": "退积分反直觉：站用户该退、站公司不能退（图已生成 API 已扣费，全退会被刷调用攻击）。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-pay-motivation", "type": "choice", "topic": "产品分析三板斧", "source": "面试题库", "front": "关于付费动机，课程用百度网盘 SVIP 案例说明什么？", "options": ["付费动机来自具体高压场景（半小时后汇报、需播高清、校园网不稳）", "付费动机来自价格便宜", "付费动机来自品牌忠诚", "付费动机来自功能数量多"], "answer": 0, "explain": "付费动机来自具体高压场景。场景要具体到可指导功能。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-llm-two-conditions", "type": "choice", "topic": "AI产品形态", "source": "面试题库", "front": "「LLM 有效服务」的必要条件与充分条件分别是？", "options": ["必要=足够数据基建和 Context；充分=用户想消费的对象本身就是 LLM 产物", "必要=大 DAU；充分=低 token 成本", "必要=多模态；充分=有 RAG", "必要=自主决策；充分=有工具调用"], "answer": 0, "explain": "必要=足够数据基建和 Context；充分=用户想消费的对象本身就是 LLM 产物（内容/图片/视频）。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-job-positioning", "type": "choice", "topic": "求职定位议价", "source": "面试题库", "front": "AI PM 应届在京东 P 序列中的合理定位是？", "options": ["P5–P6", "P1–P2", "P7", "P8–P10"], "answer": 0, "explain": "AI PM 应届合理定位 P5–P6（多模块/流程）。经验加不了分，但要追高才能得中。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-confirm-action", "type": "choice", "topic": "AI产品形态", "source": "面试题库", "front": "飞书翻译「先翻译再让用户确认」体现了什么产品原则？", "options": ["越接近对外表达/金钱/法律/组织决策的动作，越要保留人的确认", "AI 不够准就别做翻译", "所有功能都要人工确认", "翻译必须全自动才有价值"], "answer": 0, "explain": "越接近对外表达/金钱/法律/组织决策的动作，越要保留人的确认（划分责任边界）。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-prompt-iterate", "type": "choice", "topic": "提示词补充", "source": "面试题库", "front": "课程认为 Prompt 迭代本身就是「模型评测」，可上线的准确率门槛是？", "options": ["60–70%", "30–40%", "90% 以上", "100%"], "answer": 0, "explain": "Prompt 迭代=写→看→改→多角色测→算准确率，60–70%=可上线门槛。Prompt 不是越长越好。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-debate-gray", "type": "choice", "topic": "辩论思辨", "source": "面试题库", "front": "课程认为「辩论」的本质是？", "options": ["找灰色地带，不是吵赢；任何辩题有 2–5 个可拆维度", "死守一个维度坚决不松口", "声音大、气势强就能赢", "引用越多权威越好"], "answer": 0, "explain": "辩论=找灰色地带；任何辩题有 2–5 个可拆维度，死守一个=自爆。AI 给得了事实判断、给不了价值取舍。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-landing-mentor", "type": "choice", "topic": "入职Landing", "source": "面试题库", "front": "入职 Landing「Mentor 喝一杯 4 问」不包括下面哪项？", "options": ["公司什么时候发年终奖？", "团队最重要的事是什么？", "前任为什么走？", "我会踩什么坑、沟通雷点是什么？"], "answer": 0, "explain": "Mentor 4 问=团队最重要的事？前任为什么走？我会踩什么坑？沟通雷点？把自己当成入职后运营的第一款产品。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-agent-only-prompt", "type": "choice", "topic": "合格单Agent六条件", "source": "面试题库", "front": "只写了系统提示词、但没有接入任何工具，这是？", "options": ["Chatbot，不是 Agent", "合格的单 Agent", "Workflow", "Copilot"], "answer": 0, "explain": "Agent 基础特性=自主决策+自主工具调用。只写提示词没接工具=Chatbot≠Agent。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-ai-four-layer", "type": "choice", "topic": "AI产品四层架构", "source": "面试题库", "front": "AI 产品四层架构中，RAG / Prompt / Agent 属于哪一层？", "options": ["技术层", "基础设施层", "模型层", "用户层"], "answer": 0, "explain": "四层架构：基础设施层（算力/算法/数据）/ 模型层 / 技术层（RAG/Prompt/Agent）/ 用户层。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-motivation-atomic", "type": "qa", "topic": "用户研究方法论", "source": "面试题库", "front": "用户动机要拆解到几条「原子动机」？举例。", "back": "拆解到 2–4 条原子动机：点外卖收敛为 物理距离/省事/吃好的；拍照收敛为 记录/社交/悦己/变现。先对内、再对外。访谈选 KOL/重度用户=信号密度最高的代理人。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-prompt-teach-order", "type": "qa", "topic": "提示词补充", "source": "面试题库", "front": "提示词里教 AI 做事的正确顺序是什么？", "back": "先教它怎么做，再教它不能怎么做：必须告诉 AI 不能怎么做（避免套话/迎合）。生图 Agent 非必要不用反向提示词（越禁越强化）。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}, {"id": "mb-generate-agent-vertical", "type": "qa", "topic": "AI产品形态", "source": "面试题库", "front": "设计生图/生成类 Agent 时为什么优先做垂类？怎么补救通用化？", "back": "优先做垂类不做通用，通用只能质量平均=通才的下场；不锁垂类就在生成前加需求澄清。Agent 开发心智：不拿到需求就开干，先定①场景/对象/问题②输入输出模态，三步=输入→处理→输出。", "srs": {"ease": 2.5, "interval": 0, "reps": 0, "lapses": 0, "due": null, "last": null}, "cat": "面试"}];
 const STANDALONE=true;
-let pool=[], i=0, busy=false; const grades={};
-let fCat='all', fType='all', fTopic=null, limitN=20;
+const FAST_MS=6000, EXAM_N=20, EXAM_PASS=80, LS_KEY='kun_review_v2';
+let pool=[], i=0, busy=false, mode='review', cardShownAt=0; const grades={};
+let fCat='all', fType='all', fTopic=null, limitN=20, includeMastered=false;
+let sess={answered:0,correct:0}, examLog=[];
+let store=loadStore();
 const stage=document.getElementById('stage'), prog=document.getElementById('prog'),
       nav=document.getElementById('nav'), hm=document.getElementById('hm');
 const TYPE={qa:'翻卡自测',choice:'选择题',recall:'必背填空'};
@@ -192,33 +220,65 @@ function esc(s){return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':
 function pad(n){return String(n).padStart(2,'0')}
 function shuffle(a){for(let j=a.length-1;j>0;j--){const r=Math.floor(Math.random()*(j+1));[a[j],a[r]]=[a[r],a[j]];}return a;}
 function isFlip(c){return c.type!=='choice';}
-function typeMatch(c,t){t=t||fType;return t==='all'||(t==='flip'&&isFlip(c))||(t==='choice'&&c.type==='choice');}
+function lvl(c){return store.mastery[c.id]||0;}
+
+/* ---------- 本地存储：熟练度 + 累计统计 ---------- */
+function loadStore(){try{const j=JSON.parse(localStorage.getItem(LS_KEY));if(j&&j.mastery&&j.stats)return j;}catch(e){}return {mastery:{},stats:{answered:0,correct:0,examBest:0}};}
+function saveStore(){try{localStorage.setItem(LS_KEY,JSON.stringify(store));}catch(e){}}
+function resetStore(){if(!confirm('清空所有学习记录（正确率 / 已通关 / 最佳成绩）？此操作不可撤销。'))return;store={mastery:{},stats:{answered:0,correct:0,examBest:0}};saveStore();document.getElementById('setup').innerHTML=setupHtml();}
+function bumpStats(ok){store.stats.answered++;if(ok)store.stats.correct++;sess.answered++;if(ok)sess.correct++;saveStore();}
+function setMastery(c,ok,fast,strong){
+  let v=lvl(c);
+  if(!ok)v=0; else v=Math.min(5, v + (strong?3:(fast?2:1)));
+  store.mastery[c.id]=v; saveStore();
+}
+
+/* ---------- 过滤：类别 / 题型 / 已掌握 ---------- */
 function catMatch(c,k){k=k||fCat;return k==='all'||(k==='interview'&&c.cat==='面试')||(k==='course'&&c.cat!=='面试');}
-function match(c){return catMatch(c)&&typeMatch(c);}
+function typeMatch(c,t){t=t||fType;return t==='all'||(t==='flip'&&isFlip(c))||(t==='choice'&&c.type==='choice');}
+function notMastered(c){return includeMastered||lvl(c)<5;}
+function match(c){return catMatch(c)&&typeMatch(c)&&notMastered(c);}
 
 /* ---------- 控制台 / 目录 ---------- */
 function topicCounts(){const m={};CARDS.forEach(c=>{if(!match(c))return;const t=c.topic||'其他';m[t]=(m[t]||0)+1;});return m;}
 function availCount(){return CARDS.filter(match).length;}
+function masteredCount(){return Object.values(store.mastery).filter(v=>v>=5).length;}
+function statbarHtml(){
+  const s=store.stats, acc=s.answered?Math.round(s.correct/s.answered*100):0;
+  return `<div class="statbar"><span>累计 <b>${s.answered}</b> 题</span><span>正确率 <b>${acc}%</b></span><span>已通关 <b>${masteredCount()}</b> 张</span><span>最佳模拟考 <b>${s.examBest||0}</b> 分</span><button class="reset" onclick="resetStore()">清空记录</button></div>`;
+}
 function setupHtml(){
   const tc=topicCounts();
   const topics=Object.keys(tc).sort((a,b)=>tc[b]-tc[a]||a.localeCompare(b,'zh'));
   const seg=Object.keys(TLABEL).map(t=>`<button class="${fType===t?'on':''}" onclick="setType('${t}')">${TLABEL[t]}</button>`).join('');
   const ns=[[10,'10 题'],[20,'20 题'],[50,'50 题'],[0,'全部']].map(([n,l])=>`<button class="${limitN===n?'on':''}" onclick="setN(${n})">${l}</button>`).join('');
   const toc=topics.map(t=>`<button class="toc-item" onclick="startTopic('${encodeURIComponent(t)}')"><span>${esc(t)}</span><em>${tc[t]}</em></button>`).join('');
-  const catN={all:CARDS.length,course:CARDS.filter(c=>c.cat!=='面试').length,interview:CARDS.filter(c=>c.cat==='面试').length};
+  const catN={all:CARDS.filter(c=>notMastered(c)).length,course:CARDS.filter(c=>c.cat!=='面试'&&notMastered(c)).length,interview:CARDS.filter(c=>c.cat==='面试'&&notMastered(c)).length};
   const catSeg=Object.keys(CATLABEL).map(k=>`<button class="${fCat===k?'on':''}" onclick="setCat('${k}')">${CATLABEL[k]}<span class="seg-n">${catN[k]}</span></button>`).join('');
   const avail=availCount();
-  const cntTxt = (limitN&&limitN<avail)?(limitN+' 题'):('全部 '+avail+' 题');
-  return `<div class="seg-wrap"><div class="seg-label">类别</div><div class="seg seg-cat">${catSeg}</div></div>`+
+  const cntTxt=(limitN&&limitN<avail)?(limitN+' 题'):('全部 '+avail+' 题');
+  const mc=masteredCount();
+  const mrow=mc?`<div class="mastered-row"><button class="toggle-chip ${includeMastered?'on':''}" onclick="toggleMastered()">${includeMastered?'✓ 已包含':'已隐藏'} ${mc} 张「已掌握」卡 · 点击${includeMastered?'隐藏':'找回'}</button></div>`:'';
+  return statbarHtml()+
+    `<div class="seg-wrap"><div class="seg-label">类别</div><div class="seg seg-cat">${catSeg}</div></div>`+
     `<div class="seg-wrap"><div class="seg-label">题型</div><div class="seg">${seg}</div></div>`+
-    `<div class="seg-wrap"><div class="seg-label">题量 · 本轮随机抽取</div><div class="chips">${ns}</div></div>`+
+    `<div class="seg-wrap"><div class="seg-label">题量 · 本轮随机抽取（熟练度高的少出）</div><div class="chips">${ns}</div></div>`+
+    mrow+
     `<button class="start-btn" onclick="startAll()">开始复习 · ${CATLABEL[fCat]} · ${TLABEL[fType]} · ${cntTxt} →</button>`+
+    `<button class="exam-btn" onclick="startExam()">📝 模拟考试 <span class="ehint">${EXAM_N} 题随机组卷 · 跨主题 · 合格线 ${EXAM_PASS}</span></button>`+
     `<div class="seg-label toc-h">目录 · 点知识点直接开练（${CATLABEL[fCat]} · ${topics.length} 个主题）</div>`+
     `<div class="toc">${toc}</div>`;
 }
+function rerenderSetup(){document.getElementById('setup').innerHTML=setupHtml();}
+function setCat(k){fCat=k;rerenderSetup();}
+function setType(t){fType=t;rerenderSetup();}
+function setN(n){limitN=n;rerenderSetup();}
+function toggleMastered(){includeMastered=!includeMastered;rerenderSetup();}
 function home(){
-  i=0;busy=false;pool=[];
+  mode='review';i=0;busy=false;pool=[];
   document.getElementById('done').style.display='none';
+  document.getElementById('doneExam').style.display='none';
+  document.getElementById('doneReview').style.display='block';
   document.getElementById('bar').style.display='none';
   stage.style.display='none';
   prog.style.width='0%';nav.textContent='';
@@ -226,38 +286,57 @@ function home(){
   hm.textContent='选择题型与题量';
   window.scrollTo({top:0,behavior:'smooth'});
 }
-function setCat(k){fCat=k;document.getElementById('setup').innerHTML=setupHtml();}
-function setType(t){fType=t;document.getElementById('setup').innerHTML=setupHtml();}
-function setN(n){limitN=n;document.getElementById('setup').innerHTML=setupHtml();}
 function startAll(){start(fType,null,limitN);}
-function startTopic(enc){const t=decodeURIComponent(enc);start(fType,t,0);}
+function startTopic(enc){start(fType,decodeURIComponent(enc),0);}
+function weightedPick(cands,n){
+  const arr=cands.slice(), out=[]; n=Math.min(n,arr.length);
+  while(out.length<n&&arr.length){
+    let tot=0; const ws=arr.map(c=>{const w=6-lvl(c);tot+=w;return w;});
+    let r=Math.random()*tot,k=0; while(k<arr.length&&(r-=ws[k])>0)k++; if(k>=arr.length)k=arr.length-1;
+    out.push(arr.splice(k,1)[0]);
+  }
+  return out;
+}
 function start(type,topic,n){
-  fType=type;fTopic=topic;
-  pool=CARDS.filter(c=>catMatch(c,fCat)&&typeMatch(c,type)&&(!topic||((c.topic||'其他')===topic)));
-  shuffle(pool);
-  if(n&&n>0)pool=pool.slice(0,n);
-  if(!pool.length){alert('该筛选下暂时没有卡片，换个题型或主题试试。');return;}
-  i=0;for(const k in grades)delete grades[k];busy=false;
+  mode='review';fType=type;fTopic=topic;
+  const cand=CARDS.filter(c=>catMatch(c,fCat)&&typeMatch(c,type)&&notMastered(c)&&(!topic||((c.topic||'其他')===topic)));
+  if(!cand.length){alert('该筛选下暂时没有卡片（可能都已掌握）。换个题型/类别，或在首页点「找回已掌握卡」。');return;}
+  if(n&&n>0)pool=weightedPick(cand,n);
+  else{pool=cand.slice();pool.sort((a,b)=>(lvl(a)-lvl(b))||(Math.random()-0.5));}
+  beginRun();
+  document.getElementById('segBar').innerHTML=Object.keys(TLABEL).map(t=>`<button class="${fType===t&&!fTopic?'on':''}" onclick="start('${t}',null,limitN)">${TLABEL[t]}</button>`).join('');
+}
+function startExam(){
+  const ch=CARDS.filter(c=>c.type==='choice');
+  if(ch.length<5){alert('选择题数量不足，无法组卷。');return;}
+  // 跨主题分层抽样，保证「各方面的题」
+  const byT={};ch.forEach(c=>{(byT[c.topic||'其他']=byT[c.topic||'其他']||[]).push(c);});
+  Object.values(byT).forEach(shuffle);
+  const order=shuffle(Object.keys(byT)); const out=[]; let added=true;
+  while(out.length<EXAM_N&&added){added=false;for(const t of order){if(out.length>=EXAM_N)break;if(byT[t].length){out.push(byT[t].pop());added=true;}}}
+  pool=shuffle(out); mode='exam'; fTopic=null;
+  beginRun();
+  document.getElementById('segBar').innerHTML='<span class="exam-flag">📝 模拟考试</span>';
+}
+function beginRun(){
+  i=0;for(const k in grades)delete grades[k];examLog=[];sess={answered:0,correct:0};busy=false;
   document.getElementById('setup').style.display='none';
   document.getElementById('done').style.display='none';
   stage.style.display='';
-  if(STANDALONE){const bar=document.getElementById('bar');bar.style.display='flex';buildSegBar();}
+  document.getElementById('bar').style.display='flex';
   render();window.scrollTo({top:0,behavior:'smooth'});
-}
-function buildSegBar(){
-  const sb=document.getElementById('segBar');if(!sb)return;
-  sb.innerHTML=Object.keys(TLABEL).map(t=>`<button class="${fType===t&&!fTopic?'on':''}" onclick="start('${t}',null,limitN)">${TLABEL[t]}</button>`).join('');
 }
 
 /* ---------- 卡片渲染 ---------- */
 function topHtml(c){return `<div class="card-top"><span class="idx">CARD <em>${pad(i+1)}</em> / ${pad(pool.length)}</span><span class="ctype">${TYPE[c.type]||c.type}</span></div>`+
   `<div class="tags">${c.topic?'<span class="pill">'+esc(c.topic)+'</span>':''}${c.source?'<span class="pill">'+esc(c.source)+'</span>':''}</div>`;}
+function knownBtn(){return mode==='exam'?'':`<button class="known-btn" onclick="master()">✓ 这题我熟了，以后少出现</button>`;}
 function render(){
-  if(i>=pool.length){return finish();}
+  if(i>=pool.length){return mode==='exam'?examFinish():finish();}
   const c=pool[i];
   prog.style.width=(i/pool.length*100)+'%';
   nav.textContent=`${pad(i+1)} / ${pad(pool.length)}`;
-  hm.textContent=`进行中 ${pad(i+1)}/${pad(pool.length)}`;
+  hm.textContent=(mode==='exam'?'模拟考试 ':'进行中 ')+`${pad(i+1)}/${pad(pool.length)}`;
   const bc=document.getElementById('barCount');if(bc)bc.textContent=`${pad(i+1)} / ${pad(pool.length)}`;
   let h;
   if(c.type==='choice'){
@@ -266,11 +345,11 @@ function render(){
     opts+='</div>';
     h=`<article class="card anim">${topHtml(c)}<div class="q">${esc(c.front)}</div>${opts}`+
       `<div class="answer" id="ans"><span class="alabel">解析</span>${esc(c.explain||c.back||'')}</div>`+
-      `<div class="rate" id="rate"></div></article>`;
+      `<div class="rate" id="rate"></div>${knownBtn()}</article>`;
   }else{
     const front=`<article class="card">${topHtml(c)}<div class="q">${esc(c.front)}</div>`+
       `<button class="reveal-btn" onclick="reveal()">翻看答案<span class="kc">SPACE</span></button>`+
-      `<div class="hint">先在心里默答，再按 SPACE 翻卡，按真实掌握度评级（1–4）</div></article>`;
+      `<div class="hint">先在心里默答，再按 SPACE 翻卡，按真实掌握度评级（1–4）</div>${knownBtn()}</article>`;
     const back=`<article class="card">${topHtml(c)}<div class="q qb">${esc(c.front)}</div>`+
       `<div class="answer show"><span class="alabel">答案</span>${esc(c.back)}</div>`+
       `<div class="rate show">
@@ -280,7 +359,7 @@ function render(){
         <button class="rb r3" onclick="grade(3)">简单<span class="kc">4</span></button></div></article>`;
     h=`<div class="flip anim" id="flip"><div class="flip-inner" id="flipInner"><div class="face">${front}</div><div class="face back">${back}</div></div></div>`;
   }
-  stage.innerHTML=h; busy=false;
+  stage.innerHTML=h; busy=false; cardShownAt=Date.now();
   if(c.type!=='choice') syncFlip();
 }
 function syncFlip(){
@@ -295,60 +374,99 @@ function reveal(){
   const fi=document.getElementById('flipInner');if(fi._bh)fi.style.height=fi._bh+'px';
   flip.classList.add('flipped');
 }
+function master(){
+  if(busy)return;busy=true;
+  store.mastery[pool[i].id]=5;saveStore();
+  const top=stage.firstElementChild;if(top)top.classList.add('leaving');
+  i++;setTimeout(render,240);
+}
+function next(){const top=stage.firstElementChild;if(top)top.classList.add('leaving');i++;setTimeout(render,260);}
 function choose(idx){
-  const c=pool[i]; const opts=document.querySelectorAll('.opt');
+  const c=pool[i], dt=Date.now()-cardShownAt, correct=idx===c.answer;
+  const opts=document.querySelectorAll('.opt');
   opts.forEach((o,k)=>{o.onclick=null;o.setAttribute('disabled','');o.classList.add('dim');if(k===c.answer){o.classList.add('correct');o.classList.remove('dim');}});
-  if(idx!==c.answer){opts[idx].classList.add('wrong');opts[idx].classList.remove('dim');}
+  if(!correct){opts[idx].classList.add('wrong');opts[idx].classList.remove('dim');}
   document.getElementById('ans').classList.add('show');
-  const correct=idx===c.answer;
+  setMastery(c,correct,dt<FAST_MS,false); bumpStats(correct);
+  if(mode==='exam'){
+    examLog.push({front:c.front,correct,picked:idx,answer:c.answer,options:c.options});
+    busy=true;setTimeout(()=>{i++;render();},950);return;
+  }
   const rate=document.getElementById('rate');rate.classList.add('show');
-  if(correct){rate.innerHTML='<button class="rb r2" onclick="grade(2)">答对·会<span class="kc">3</span></button><button class="rb r3" onclick="grade(3)">太简单<span class="kc">4</span></button>';}
-  else{rate.innerHTML='<button class="rb r0" onclick="grade(0)">答错·忘了<span class="kc">1</span></button><button class="rb r1" onclick="grade(1)">答错·有印象<span class="kc">2</span></button>';}
+  if(correct){rate.innerHTML='<button class="rb r2" onclick="next()">答对·会<span class="kc">3</span></button><button class="rb r3" onclick="master()">太简单·别再考<span class="kc">4</span></button>';}
+  else{rate.innerHTML='<button class="rb r0" onclick="next()">答错·忘了<span class="kc">1</span></button><button class="rb r1" onclick="next()">答错·有印象<span class="kc">2</span></button>';}
 }
 function grade(g){
-  if(busy)return; busy=true;
-  grades[pool[i].id]=g;
-  const top=stage.firstElementChild; if(top)top.classList.add('leaving');
-  i++; setTimeout(render,260);
+  if(busy)return;busy=true;
+  const c=pool[i];grades[c.id]=g;
+  if(c.type!=='choice'){const dt=Date.now()-cardShownAt;setMastery(c,g>=2,dt<FAST_MS,g===3);bumpStats(g>=2);}
+  const top=stage.firstElementChild;if(top)top.classList.add('leaving');
+  i++;setTimeout(render,260);
 }
 function finish(){
   prog.style.width='100%';nav.textContent=`${pad(pool.length)} / ${pad(pool.length)}`;hm.textContent='已完成';
-  stage.style.display='none';
-  document.getElementById('bar').style.display='none';
-  document.getElementById('done').style.display='block';
+  stage.style.display='none';document.getElementById('bar').style.display='none';
+  document.getElementById('doneExam').style.display='none';
+  document.getElementById('doneReview').style.display='block';
   const vals=Object.values(grades);
   const ok=vals.filter(g=>g>=2).length, again=vals.filter(g=>g===0).length;
+  const acc=sess.answered?Math.round(sess.correct/sess.answered*100):'—';
   document.getElementById('donestat').innerHTML=
     `<div class="stat"><b>${pad(vals.length)}</b><span>已复习</span></div>`+
+    `<div class="stat hi"><b>${acc}${sess.answered?'%':''}</b><span>本轮正确率</span></div>`+
     `<div class="stat ok"><b>${pad(ok)}</b><span>掌握</span></div>`+
     `<div class="stat again"><b>${pad(again)}</b><span>需重背</span></div>`;
   document.getElementById('result').textContent=Object.entries(grades).map(([k,v])=>k+':'+v).join(',');
+  document.getElementById('done').style.display='block';
   if(STANDALONE){
     const r=document.getElementById('result'), rl=r.previousElementSibling;
     if(rl)rl.style.display='none'; r.style.display='none';
-    const cpb=document.querySelector('.copy'); if(cpb)cpb.style.display='none';
-    const sub=document.querySelector('.done-sub');
-    if(sub)sub.textContent='公开随时复习页 · 进度仅本次有效。可「再来一轮」打乱重练，或返回目录换题型/知识点。';
-    let again=document.getElementById('againBtn');
-    if(!again){again=document.createElement('button');again.id='againBtn';again.className='copy';again.onclick=restart;document.querySelector('.done-card').appendChild(again);}
-    again.textContent='🔁 再来一轮（打乱）';
-    let back=document.getElementById('homeBtn');
-    if(!back){back=document.createElement('button');back.id='homeBtn';back.className='copy';back.style.cssText='margin-left:8px;background:var(--bg);color:var(--text);border:1.5px solid var(--border)';back.onclick=home;document.querySelector('.done-card').appendChild(back);}
-    back.textContent='← 返回目录';
+    const cpb=document.querySelector('#doneReview .copy'); if(cpb)cpb.style.display='none';
+    const sub=document.querySelector('#doneReview .done-sub');
+    if(sub)sub.textContent='公开随时复习页 · 进度按本设备本地保存。可「再来一轮」打乱，或返回目录换题型/知识点。';
+    const dc=document.getElementById('doneReview');
+    let ag=document.getElementById('againBtn');
+    if(!ag){ag=document.createElement('button');ag.id='againBtn';ag.className='copy';ag.onclick=restart;dc.appendChild(ag);}
+    ag.textContent='🔁 再来一轮（打乱）';
+    let bk=document.getElementById('homeBtn');
+    if(!bk){bk=document.createElement('button');bk.id='homeBtn';bk.className='copy';bk.style.cssText='margin-left:8px;background:var(--bg);color:var(--text);border:1.5px solid var(--border)';bk.onclick=home;dc.appendChild(bk);}
+    bk.textContent='← 返回目录';
   }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function examFinish(){
+  const total=examLog.length, correct=examLog.filter(e=>e.correct).length;
+  const score=total?Math.round(correct/total*100):0, pass=score>=EXAM_PASS;
+  if(score>(store.stats.examBest||0)){store.stats.examBest=score;saveStore();}
+  prog.style.width='100%';hm.textContent='考试结束';nav.textContent=`${pad(total)} / ${pad(total)}`;
+  stage.style.display='none';document.getElementById('bar').style.display='none';
+  const wrong=examLog.filter(e=>!e.correct);
+  const L='ABCDEFGH';
+  const wl=wrong.length
+    ?`<div class="wrong-list"><div class="wl-h">错题回顾 · ${wrong.length} 题</div>`+wrong.map(e=>`<div class="wrong-item"><b>${esc(e.front)}</b>你选 ${L[e.picked]} ｜ 正确 ${L[e.answer]}：${esc(e.options[e.answer]||'')}</div>`).join('')+`</div>`
+    :'<p class="done-sub" style="margin-top:18px">满分通过，全部答对 🎉</p>';
+  const de=document.getElementById('doneExam');
+  de.innerHTML=`<div class="eyebrow" style="margin-bottom:8px">模拟考试 · EXAM RESULT</div>`+
+    `<div class="score-ring" style="color:${pass?'var(--good)':'var(--warn)'}">${score}</div>`+
+    `<div class="passtag ${pass?'pass':'fail'}">${pass?'✓ 合格':'✗ 不合格'} · 满分 100 · 合格线 ${EXAM_PASS}</div>`+
+    `<div class="stats"><div class="stat"><b>${pad(total)}</b><span>总题数</span></div><div class="stat ok"><b>${pad(correct)}</b><span>答对</span></div><div class="stat again"><b>${pad(total-correct)}</b><span>答错</span></div></div>`+
+    wl+
+    `<div style="margin-top:24px"><button class="copy" onclick="startExam()">🔁 再考一次</button><button class="copy" style="margin-left:8px;background:var(--bg);color:var(--text);border:1.5px solid var(--border)" onclick="home()">← 返回目录</button></div>`;
+  document.getElementById('doneReview').style.display='none';
+  de.style.display='block';document.getElementById('done').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 function restart(){
   if(!pool.length)return home();
-  shuffle(pool);i=0;for(const k in grades)delete grades[k];busy=false;
+  shuffle(pool);i=0;for(const k in grades)delete grades[k];sess={answered:0,correct:0};busy=false;mode='review';
   document.getElementById('done').style.display='none';
-  stage.style.display='';
-  if(STANDALONE){document.getElementById('bar').style.display='flex';buildSegBar();}
+  stage.style.display='';document.getElementById('bar').style.display='flex';
   render();window.scrollTo({top:0,behavior:'smooth'});
 }
 function cp(){const t=document.getElementById('result').textContent;if(navigator.clipboard)navigator.clipboard.writeText(t);const b=event.target;b.textContent='✓ 已复制';setTimeout(()=>b.textContent='📋 复制结果串',1500);}
 document.addEventListener('keydown',e=>{
   if(!pool.length||i>=pool.length||busy)return;
-  const c=pool[i]; const k=e.key.toLowerCase();
+  const c=pool[i], k=e.key.toLowerCase();
   if(c.type==='choice'){
     if(document.querySelector('.opt[disabled]'))return;
     let idx=-1;
