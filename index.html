@@ -2,6 +2,7 @@
 <html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>每日复盘 · AI 产品学习 · 复盘卡片</title>
+<link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -310,6 +311,7 @@ const JULY6_CARDS=[
 {"id":"kc-0706-no-copying-materials","type":"choice","topic":"求职诚信","source":"7-6中午 AI产品经理求职简历与面试准备","cat":"面试","front":"为什么不能直接复制别人的简历和话术？","options":["没有自己的证据，追问时无法解释细节和边界","所有模板都违法","面试官不看简历","项目无需准备"],"answer":0,"back":"可借鉴结构，但内容必须落到自己的真实经历、判断和证据。","explain":"表达可以学习，经历不能复制。","analogy":"可以学菜谱，不能拿别人的成品照冒充。","srs":{"ease":2.5,"interval":0,"reps":0,"lapses":0,"due":null,"last":null}}
 ];
 CARDS.push(...JULY6_CARDS);
+document.querySelector('.head-meta b').textContent=CARDS.length;
 const STANDALONE=true;
 const FAST_MS=6000, LS_KEY='kun_review_v3';
 /* 全网排行榜后端（Supabase）：填了就走全网榜，留空则本地榜兜底 */
