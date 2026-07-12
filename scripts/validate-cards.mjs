@@ -9,8 +9,27 @@ assert(match, 'CARDS array not found');
 const cards = JSON.parse(match[1]);
 const ids = new Set(cards.map((card) => card.id));
 
-assert.equal(cards.length, 243, 'card count should include the July AI PM and interview update');
 assert.equal(ids.size, cards.length, 'card ids must be unique');
+
+const july6Cards = cards.filter((card) => card.id.startsWith('kc-0706-'));
+assert(july6Cards.length >= 50, 'July 6 import should contain at least 50 deduplicated cards');
+assert(cards.length >= 293, 'card count should include the complete July 6 import');
+
+for (const id of [
+  'kc-0706-hr-screening-25',
+  'kc-0706-project-evidence-chain',
+  'kc-0706-model-evaluation-story',
+  'kc-0706-online-resume-first',
+  'kc-0706-self-intro-mainline',
+  'kc-0706-staged-applications',
+  'kc-0706-interview-review-loop',
+]) {
+  assert(ids.has(id), `missing expected card ${id}`);
+}
+
+const july6Sources = new Set(july6Cards.map((card) => card.source));
+assert(july6Sources.has('7-6上午 AI产品经理求职培训课程'));
+assert(july6Sources.has('7-6中午 AI产品经理求职简历与面试准备'));
 
 for (const id of [
   'kc-0701-career-granularity',
